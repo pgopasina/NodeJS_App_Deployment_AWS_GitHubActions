@@ -19,15 +19,12 @@ jobs:
       uses: actions/checkout@v2
       with:
         node-version: '18.16.0'
-        
-    - name: Set-up CI
-    - run: npm ci
-    
-    - name: Build the Node.js application
-    - run: npm run build
 
-    # - name: Running the Test Cases
-    # - run: npm test
+    - name: Dependency installation
+      run: npm install
+
+    # - name: Running Tests
+    #   run: npm test
       
   windows-build:
     runs-on: ubuntu-latest
@@ -41,11 +38,8 @@ jobs:
       with:
         node-version: '18.16.0'
 
-    - name: Set-up CI
-    - run: npm ci
-    
-    - name: Build the Node.js application
-    - run: npm run build
+    - name: Dependency installation
+      run: npm install
 
-    # - name: Running the Test Cases
-    # - run: npm test
+    # - name: Running Tests
+    #   run: npm test
