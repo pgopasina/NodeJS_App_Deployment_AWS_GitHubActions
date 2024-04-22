@@ -11,7 +11,7 @@ app.get('/will', function (req, res) {
 });
 
 app.get('/ready', function (req, res) {
-    res.send('{ "response": "Great!, It works!" }');
+    res.send('{ "response": "Great!, Its working!" }');
 });
 
 app.listen(port, () => {
