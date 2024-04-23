@@ -26,10 +26,10 @@ name: nodeTestApp CI/CD
 on:
   push:
     branches: ["master"]
-  workflow_run:
-    workflows: ["nodeTestApp CI"]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: ["nodeTestApp CI"]
+  #   types:
+  #     - completed
 
 jobs:
   build:
