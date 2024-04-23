@@ -1,65 +1,42 @@
-name: nodeTestApp CI
+name: nodeTestApp CI/CD
+
 on:
   push:
     branches: ["master"]
+  workflow_run:
+    workflows: ["nodeTestApp CI"]
+    types:
+      - completed
+
 jobs:
   build:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Login to DockerHub
-      env:
-        DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: Login to DockerHub
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
-    - name: Build the Docker Image
-      run: docker build -t prudhvigopasina1999/nodetestapp .
+      - name: Build the Docker Image
+        run: docker build -t prudhvigopasina1999/nodetestapp .
 
-    - name: Push to DockerHub
-      run: docker build -t prudhvigopasina1999/nodetestapp:latest .
+      - name: Push to DockerHub
+        run: docker push prudhvigopasina1999/nodetestapp
 
-# name: nodeTestApp CI/CD
+  deploy:
+    runs-on: self-hosted
 
-# on:
-#   push:
-#     branches: ["master"]
-#   workflow_run:
-#     workflows: ["nodeTestApp CI"]
-#     types:
-#       - completed
+    steps:
+      - name: Pull Docker Image
+        run: sudo docker pull prudhvigopasina1999/nodetestapp:latest
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-    
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
+      - name: Delete old Docker container 
+        run: sudo docker rm -f nodetestapp-container || true 
 
-#       - name: Login to DockerHub
-#         env:
-#           DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-#           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-#         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-
-#       - name: Build the Docker Image
-#         run: docker build -t prudhvigopasina1999/nodetestapp .
-
-#       - name: Push to DockerHub
-#         run: docker push prudhvigopasina1999/nodetestapp
-
-#   deploy:
-#     runs-on: self-hosted
-
-#     steps:
-      # - name: Pull Docker Image
-      #   run: sudo docker pull prudhvigopasina1999/nodetestapp:latest
-
-      # - name: Delete old Docker container 
-      #   run: sudo docker rm -f nodetestapp-container || true 
-
-      # - name: Run Docker Container
-      #   run: sudo docker run -d -p 3000:3001 --name nodetestapp-container prudhvigopasina1999/nodetestapp
+      - name: Run Docker Container
+        run: sudo docker run -d -p 3000:3001 --name nodetestapp-container prudhvigopasina1999/nodetestapp
