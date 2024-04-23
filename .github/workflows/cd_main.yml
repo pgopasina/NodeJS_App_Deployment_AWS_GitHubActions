@@ -2,7 +2,9 @@ name: nodeTestApp CD
 on:
   workflow_run:
     workflow: ["nodeTestApp CI"]
-  
+    types:
+      - completed
+      
 jobs:
   build:
     runs-on: self-hosted
