@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Pull Docker Image
-      run: sudo docker pull prudhvigopasina1999/nodetestapp:latest
+      run: sudo docker pull prudhvigopasina1999/nodetestapp:latest .
 
     - name: Delete old Docker container 
       run: sudo docker rm -f nodetestapp-container || true 
