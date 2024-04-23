@@ -52,6 +52,7 @@ jobs:
         run: docker push prudhvigopasina1999/nodetestapp
 
   deploy:
+    needs: build
     runs-on: self-hosted
 
     steps:
