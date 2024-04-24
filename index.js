@@ -7,7 +7,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/will', function (req, res) {
-    res.send('{ "response": "Hello World" }');
+    res.send('{ "response": "Hello World wellcome to GitHub actions" }');
 });
 
 app.get('/ready', function (req, res) {
