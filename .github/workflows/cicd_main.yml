@@ -49,7 +49,7 @@ jobs:
         run: docker build -t prudhvigopasina1999/nodetestapp .
 
       - name: Push to DockerHub
-        run: docker push prudhvigopasina1999/nodetestapp
+        run: docker build -t prudhvigopasina1999/nodetestapp:latest .
 
   deploy:
     needs: build
